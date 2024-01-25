@@ -1,19 +1,12 @@
-CPP = g++
-CPPFLAGS = -Wall -g
-TARGET = calculator
-SRC = main.cpp calculator.cpp
-OBJ = $(SRC:.cpp=.o)
-LIB = Lib.a
+all: calc
 
-all: $(TARGET)
-$(TARGET): $(OBJ) $(LIB)
-	$(CPP) $(CPPFLAGS) -o $(TARGET) $(OBJ) -L. -I: $(LIB)
+calc: main.o calculator.o
+	g++ main.o calculator.o -o calc
 
-$(LIB): $(OBJ)
-	ar rcs $@ $^
-	
-%.o: %.cpp 
-	$(CPP) $(CPPFLAGS) -c %.cpp -o %.o
+main.o: main.cpp
+	g++ -c main.cpp
 
-clean:
-	rm -f *.o *.a $(TARGET)
+calculator.o: calculator.cpp
+	g++ -c calculator.cpp
+
+clean: rm -rf *.o calc
